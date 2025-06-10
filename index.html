@@ -1,0 +1,1851 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HarpyIllogical</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="icon" href="images/NoBackgroundIcon.png" type="image/png">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', 'Helvetica Neue', sans-serif;
+            color: #333;
+            line-height: 1.6;
+            overflow-x: hidden;
+            background: #f8f9fa;
+        }
+
+        /* Header Video */
+        .header {
+            position: relative;
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .video-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0);
+            z-index: -1;
+        }
+
+        .video-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1;
+        }
+
+        video {
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            object-fit: cover;
+        }
+
+        project-video-player {
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            object-fit: cover;
+        }
+		
+        .hero-content {
+            text-align: center;
+            color: white;
+            z-index: 2;
+            padding: 0 20px;
+            max-width: 800px;
+        }
+
+        .hero-title {
+            font-size: 4.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            line-height: 1.1;
+        }
+
+        /* Navigation */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 25px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            transition: background 0.3s ease, padding 0.3s ease;
+            background: transparent;
+        }
+
+        .navbar.scrolled {
+            height: 70px;
+            background: #222;
+            padding: 15px 40px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: white;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+
+        .nav-links li {
+            margin-left: 30px;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1rem;
+            position: relative;
+            padding-bottom: 5px;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: white;
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .nav-links a.active {
+            font-weight: 600;
+        }
+
+        .nav-links a.active::after {
+            width: 100%;
+        }
+
+        /* Sections */
+        .section {
+            padding: 60px 6%;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+        }
+
+        .section-title {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 40px;
+            position: relative;
+            padding-bottom: 15px;
+            text-align: center;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 150px;
+            height: 4px;
+            background: #333;
+        }
+
+        /* Intro Section */
+        .intro-content {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .intro-text {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            line-height: 1.8;
+        }
+
+        /* Work Section */
+        .work-section {
+            background: #f8f8f8;
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 40px;
+        }
+
+        .project-card {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .project-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .project-image {
+            height: 300px;
+            background: #ddd;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #777;
+        }
+
+        .project-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 0;
+        }
+
+        .project-content {
+            padding: 25px;
+        }
+
+        .project-title {
+            font-size: 1.4rem;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        /* Studio Section */
+        .studio-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .studio-text {
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+
+        .studio-image {
+            height: 500px;
+            background: #ddd;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #777;
+            border-radius: 8px;
+        }
+
+        /* Contact Section */
+        .contact-section {
+            background: #f0f0f0;
+        }
+
+        .contact-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            width: 100%;
+        }
+
+        .contact-form {
+            background: white;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-family: 'Inter', sans-serif;
+            font-size: 1rem;
+        }
+
+        .form-group textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        .submit-btn {
+            background: #333;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            font-size: 1rem;
+            font-weight: 500;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .submit-btn:hover {
+            background: #555;
+        }
+
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .info-item {
+            margin-bottom: 25px;
+        }
+
+        .info-title {
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin-bottom: 8px;
+        }
+
+        /* Footer */
+        .footer {
+            background: #222;
+            color: white;
+            padding: 40px 10%;
+            text-align: center;
+            position: relative;
+            z-index: 5;
+            /* Set footer z-index higher than social icons */
+        }
+
+        .footer-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .footer-logo {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        .copyright {
+            margin-top: 30px;
+            color: #aaa;
+        }
+
+        /* Social Icons */
+        .social-icons {
+            position: absolute;
+            /* Keep absolute positioning */
+            bottom: 100%;
+            /* Position it at the top of the footer's space */
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: center;
+            padding: 10px 0;
+            background: transparent;
+            transition: transform 0.5s ease;
+            transform: translateY(100%);
+            /* This initial transform will push it down, off-screen */
+            z-index: 1;
+            /* This will ensure it's above the video, but below the footer's z-index if the footer is higher */
+        }
+
+        .social-icons.visible {
+            transform: translateY(0);
+        }
+
+        .social-icons a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            height: 50px;
+            margin: 0 15px;
+            border-radius: 50%;
+            background: transparent;
+            /* Changed from #222 to transparent */
+            color: rgba(255, 255, 255, 0);
+            font-size: 1.5rem;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .social-icons a::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 60px;
+            height: 60px;
+            background: rgba(255, 255, 255, 0);
+            border-radius: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            transition: transform 0.3s ease;
+            z-index: -1;
+        }
+
+        .social-icons a:hover {
+            color: #333;
+            background: white;
+        }
+
+        .social-icons a:hover::before {
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        .social-icons a i {
+            transition: color 0.3s ease;
+        }
+
+        /* Animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .fade-in.appear {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Portfolio Page */
+        .portfolio-header {
+            height: 70vh;
+            background: linear-gradient(135deg, #1a2a6c, #b21f1f, #1a2a6c);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+        }
+
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 40px;
+            padding: 80px 10%;
+        }
+
+        .portfolio-item {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease;
+        }
+
+        .portfolio-item:hover {
+            transform: translateY(-10px);
+        }
+
+        .portfolio-image {
+            height: 300px;
+            background: linear-gradient(45deg, #6a11cb, #2575fc);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+        }
+
+        .portfolio-info {
+            padding: 25px;
+        }
+
+        .portfolio-title {
+            font-size: 1.4rem;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        /* About Page */
+        .about-header {
+            height: 70vh;
+            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+        }
+
+        .about-content {
+            padding: 80px 10%;
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+        }
+
+        .about-image {
+            height: 50vh;
+            background: linear-gradient(45deg, #ff416c, #ff4b2b);
+            border-radius: 8px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 0;
+        }
+
+        .about-image img.about-img {
+            height: auto;
+            width: 100%;
+            object-fit: cover;
+            border-radius: 8px;
+            border-radius: 0;
+        }
+
+        .about-text {
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .skill-item {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .skill-title {
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+        }
+
+        .skill-title i {
+            margin-right: 10px;
+            color: #ff4b2b;
+        }
+
+        /* Contact Page */
+        .contact-header {
+            height: 70vh;
+            background: linear-gradient(135deg, #141e30, #243b55);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+        }
+
+        .discord-contact {
+            background: #5865F2;
+            padding: 30px;
+            border-radius: 15px;
+            display: inline-flex;
+            align-items: center;
+            margin-top: 30px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .discord-contact i {
+            font-size: 3rem;
+            margin-right: 20px;
+        }
+
+        .discord-contact span {
+            font-size: 1.8rem;
+            font-weight: 600;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .projects-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .studio-content,
+            .contact-container,
+            .about-content {
+                grid-template-columns: 1fr;
+            }
+
+            .studio-image,
+            .about-image {
+                height: 400px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 3.5rem;
+            }
+
+            .navbar {
+                padding: 20px;
+            }
+
+            .nav-links li {
+                margin-left: 20px;
+            }
+
+            .section {
+                padding: 80px 5%;
+            }
+
+            .projects-grid,
+            .portfolio-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .section-title {
+                font-size: 2.5rem;
+            }
+
+            .skills-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .hero-title {
+                font-size: 2.5rem;
+            }
+
+            .navbar {
+                flex-direction: column;
+                padding: 15px;
+            }
+
+            .logo {
+                margin-bottom: 15px;
+            }
+
+            .nav-links {
+                width: 100%;
+                justify-content: space-around;
+            }
+
+            .nav-links li {
+                margin: 0 5px;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .contact-form {
+                padding: 25px;
+            }
+
+            .discord-contact {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .discord-contact i {
+                margin-right: 0;
+                margin-bottom: 15px;
+            }
+
+            .social-icons a {
+                margin: 0 10px;
+                width: 40px;
+                height: 40px;
+                font-size: 1.2rem;
+            }
+        }
+
+        /* Featured Work Section */
+        .featured-work-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .image-carousel {
+            margin: 0 auto;
+            max-width: 800px;
+        }
+
+        .main-image-container {
+            position: relative;
+            margin: 0 auto 30px;
+            max-width: 1500px;
+            overflow: hidden;
+        }
+
+        #main-featured-image {
+            width: 100%;
+            height: 463px;
+            object-fit: cover;
+            transition: opacity 0.8s ease;
+            transition: opacity 0.4s ease-in-out;
+        }
+
+        .arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0, 0, 0, 0.5);
+            border: none;
+            color: white;
+            width: 50px;
+            height: 50px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 0;
+            /* Square shape */
+        }
+
+        .arrow:hover {
+            background: rgba(0, 0, 0, 0.8);
+        }
+
+        .left-arrow {
+            left: 15px;
+        }
+
+        .right-arrow {
+            right: 15px;
+        }
+
+        .thumbnails {
+            display: flex;
+            justify-content: center;
+            gap: 0px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .thumbnail {
+            width: 120px;
+            height: 80px;
+            object-fit: cover;
+            cursor: pointer;
+            transition: border 0.3s ease;
+            border: 0px solid transparent;
+            border-radius: 0;
+            /* Removed rounded edges */
+        }
+
+        /* Removed hover effect */
+        .thumbnail.active {
+            border: 2px solid #333;
+        }
+
+        #portfolio-button {
+            margin: 0 auto;
+            display: block;
+            background: #333;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            border-radius: 0;
+            /* Removed rounded edges */
+        }
+
+        #portfolio-button:hover {
+            background: #555;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .main-image-container {
+                max-width: 100%;
+            }
+
+            #main-featured-image {
+                height: 350px;
+            }
+
+            .thumbnail {
+                width: 90px;
+                height: 60px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            #main-featured-image {
+                height: 250px;
+            }
+
+            .thumbnail {
+                width: 70px;
+                height: 50px;
+            }
+
+            .arrow {
+                width: 40px;
+                height: 40px;
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="logo">
+            <img src="Images/IconBlackWhite.png" alt="Logo" style="height: 1.5em; vertical-align: middle; margin-right: 0.1 em;">
+            HarpyIllogical
+        </div>
+        <ul class="nav-links">
+            <li><a href="index.html" class="active">Home</a></li>
+            <li><a href="portfolio.html">Portfolio</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="contact.html">Contact</a></li>
+        </ul>
+    </nav>
+
+    <!-- Home Page -->
+    <div id="home-page">
+        <header class="header">
+            <div class="video-container">
+                <div class="video-overlay"></div>
+                <video id="videoPlayer" autoplay muted playsinline>
+                    <source src="videos/Source1.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+
+            <div class="hero-content">
+                <h1 class="hero-title">Experimental Roblox Creator</h1>
+                <p class="hero-description" style="font-size: 1.5rem; color: #aaa; margin-top: 20px;">
+                    I use Roblox to create immersive worlds, unique designs, and interactive experiences.
+                </p>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main>
+            <!-- Work Section -->
+            <section id="work" class="section work-section">
+                <div class="work-content">
+                    <h2 class="section-title">HarpyIllogical is a one-man force — a dedicated artist and developer driven by pure passion.</h2>
+                    <div class="projects-grid">
+
+                        <!-- Project 1 -->
+                        <div class="project-card fade-in">
+                            <div class="project-image">
+                                <img src="Images/Project1.jpg" alt="Demonic Character">
+                            </div>
+
+                            <div class="project-content">
+                                <h3 class="project-title">Artistic</h3>
+                                <p>I enjoy creating 3D art using popular tools like <strong>Blender</strong>, <strong>Substance Painter</strong>, and <strong>3DCoat</strong>. Every project I work on is an opportunity to enhance my skills in modeling, texturing, and design.</p>
+                            </div>
+                        </div>
+
+                        <!-- Project 2 -->
+                        <div class="project-card fade-in">
+                            <div class="project-image">
+                                <img src="Images/Project2.png" alt="Fantasy Kingdom">
+                            </div>
+                            <div class="project-content">
+                                <h3 class="project-title">Technical</h3>
+                                <p>I work with <strong>Lua</strong> to develop functional game mechanics. Whether it's fixing bugs or implementing new features, I focus on making things work well for players.</p>
+                            </div>
+                        </div>
+
+                        <!-- Project 3 -->
+                        <div class="project-card fade-in">
+                            <div class="project-image">
+                                <img src="Images/Project3.png" alt="Fantasy Kingdom">
+                            </div>
+                            <div class="project-content">
+                                <h3 class="project-title">Experimental</h3>
+                                <p>I like exploring new ideas and technologies in my work. These projects are a chance to experiment, learn, and sometimes create something unexpected and fun.</p>
+                            </div>
+                        </div>
+            </section>
+
+            <!-- Featured Work Section -->
+            <section id="featured-work" class="section">
+                <div class="featured-work-container">
+                    <h2 class="section-title">Featured Work</h2>
+
+                    <div class="image-carousel">
+                        <div class="main-image-container">
+                            <img src="images/featured1.png" alt="Featured Work" id="main-featured-image">
+                            <button class="arrow left-arrow"><i class="fas fa-chevron-left"></i></button>
+                            <button class="arrow right-arrow"><i class="fas fa-chevron-right"></i></button>
+                        </div>
+
+                        <div class="thumbnails">
+                            <img src="images/featured1.png" alt="Thumbnail 1" class="thumbnail active" data-index="0">
+                            <img src="images/featured2.png" alt="Thumbnail 2" class="thumbnail" data-index="1">
+                            <img src="images/featured3.png" alt="Thumbnail 3" class="thumbnail" data-index="2">
+                            <img src="images/featured4.png" alt="Thumbnail 4" class="thumbnail" data-index="3">
+                            <img src="images/featured5.png" alt="Thumbnail 5" class="thumbnail" data-index="4">
+                            <img src="images/featured6.png" alt="Thumbnail 6" class="thumbnail" data-index="5">
+                            <img src="images/featured7.png" alt="Thumbnail 7" class="thumbnail" data-index="6">
+                            <img src="images/featured8.png" alt="Thumbnail 8" class="thumbnail" data-index="7">
+                            <img src="images/featured9.png" alt="Thumbnail 9" class="thumbnail" data-index="8">
+                            <img src="images/featured10.png" alt="Thumbnail 10" class="thumbnail" data-index="9">
+                        </div>
+
+                        <button id="portfolio-button" class="submit-btn">Full Portfolio</button>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Updated Portfolio Page -->
+    <div id="portfolio-page" style="display: none;">
+        <header class="header">
+            <div class="video-container">
+                <div class="video-overlay"></div>
+                <video id="videoPlayer" autoplay muted playsinline loop>
+                    <source src="videos/Source7.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+
+            <div class="hero-content">
+                <h1 class="hero-title">Portfolio</h1>
+                <p class="hero-description" style="font-size: 1.5rem; color: #aaa; margin-top: 20px;">
+                    I have made a lot of project in my career, here are some of my favourite.
+                </p>
+            </div>
+        </header>
+
+        <div class="portfolio-grid" style="
+			  display: flex;
+			  justify-content: center;
+			  flex-wrap: wrap;
+			  max-width: 1000px;
+			  margin: 0 auto;">
+			  
+            <div class="portfolio-item fade-in" style="
+				position: relative;
+				width: 100%;
+				max-width: 1374px;
+				margin: 0 auto;">
+                <div class="portfolio-image" style="
+					  width: 100%;
+					  padding-top: calc(768 / 1374 * 100%);
+					  background-image: url('images/project1.jpg');
+					  background-size: cover;
+					  background-position: center center;
+					  background-repeat: no-repeat;
+					  position: relative;">
+                    <div class="portfolio-info" style="
+						position: absolute;
+						top: 0;
+						left: 0;
+						width: 100%;
+						height: 100%;
+						display: flex;
+						align-items: center;
+						justify-content: center;
+						flex-direction: column;
+						text-align: center;
+						background: rgba(0,0,0,0);
+						padding: 20px;" onclick="showProject('project1')">
+                        <h3 class="portfolio-title" style="font-size: 2.5rem; color: white;">Malarkar</h3>
+                        <p style="font-size: 1.8rem; color: lightgray;">Personal</p>
+                    </div>
+                </div>
+            </div>
+			
+			<div class="portfolio-item fade-in" style="
+				position: relative;
+				width: 100%;
+				max-width: 1374px;
+				margin: 0 auto;">
+                <div class="portfolio-image" style="
+					  width: 100%;
+					  padding-top: calc(768 / 1374 * 100%);
+					  background-image: url('images/featured1.png');
+					  background-size: cover;
+					  background-position: center center;
+					  background-repeat: no-repeat;
+					  position: relative;">
+                    <div class="portfolio-info" style="
+						position: absolute;
+						top: 0;
+						left: 0;
+						width: 100%;
+						height: 100%;
+						display: flex;
+						align-items: center;
+						justify-content: center;
+						flex-direction: column;
+						text-align: center;
+						background: rgba(0,0,0,0);
+						padding: 20px;" onclick="showProject('project2')">
+                        <h3 class="portfolio-title" style="font-size: 2.5rem; color: white;">My Pet Tycoon</h3>
+                        <p style="font-size: 1.8rem; color: lightgray;">Personal</p>
+                    </div>
+                </div>
+            </div>
+			
+			<div class="portfolio-item fade-in" style="
+				position: relative;
+				width: 100%;
+				max-width: 1374px;
+				margin: 0 auto;">
+                <div class="portfolio-image" style="
+					  width: 100%;
+					  padding-top: calc(768 / 1374 * 100%);
+					  background-image: url('images/featured4.png');
+					  background-size: cover;
+					  background-position: center center;
+					  background-repeat: no-repeat;
+					  position: relative;">
+                    <div class="portfolio-info" style="
+						position: absolute;
+						top: 0;
+						left: 0;
+						width: 100%;
+						height: 100%;
+						display: flex;
+						align-items: center;
+						justify-content: center;
+						flex-direction: column;
+						text-align: center;
+						background: rgba(0,0,0,0);
+						padding: 20px;" onclick="showProject('project3')">
+                        <h3 class="portfolio-title" style="font-size: 2.5rem; color: white;">Duels Pedestals</h3>
+                        <p style="font-size: 1.8rem; color: lightgray;">Noob Army Tyccon</p>
+                    </div>
+                </div>
+            </div>
+			
+			<div class="portfolio-item fade-in" style="
+				position: relative;
+				width: 100%;
+				max-width: 1374px;
+				margin: 0 auto;">
+                <div class="portfolio-image" style="
+					  width: 100%;
+					  padding-top: calc(768 / 1374 * 100%);
+					  background-image: url('images/featured5.png');
+					  background-size: cover;
+					  background-position: center center;
+					  background-repeat: no-repeat;
+					  position: relative;">
+                    <div class="portfolio-info" style="
+						position: absolute;
+						top: 0;
+						left: 0;
+						width: 100%;
+						height: 100%;
+						display: flex;
+						align-items: center;
+						justify-content: center;
+						flex-direction: column;
+						text-align: center;
+						background: rgba(0,0,0,0);
+						padding: 20px;" onclick="showProject('project4')">
+                        <h3 class="portfolio-title" style="font-size: 2.5rem; color: white;">Fourth Anniversary Skin</h3>
+                        <p style="font-size: 1.8rem; color: lightgray;">Noob Army Tycoon</p>
+                    </div>
+                </div>
+            </div>
+			
+			<div class="portfolio-item fade-in" style="
+				position: relative;
+				width: 100%;
+				max-width: 1374px;
+				margin: 0 auto;">
+                <div class="portfolio-image" style="
+					  width: 100%;
+					  padding-top: calc(768 / 1374 * 100%);
+					  background-image: url('images/featured6.png');
+					  background-size: cover;
+					  background-position: center center;
+					  background-repeat: no-repeat;
+					  position: relative;">
+                    <div class="portfolio-info" style="
+						position: absolute;
+						top: 0;
+						left: 0;
+						width: 100%;
+						height: 100%;
+						display: flex;
+						align-items: center;
+						justify-content: center;
+						flex-direction: column;
+						text-align: center;
+						background: rgba(0,0,0,0);
+						padding: 20px;" onclick="showProject('project5')">
+                        <h3 class="portfolio-title" style="font-size: 2.5rem; color: white;">Commissions</h3>
+                        <p style="font-size: 1.8rem; color: lightgray;">Professional</p>
+                    </div>
+                </div>
+            </div>
+			
+			
+        </div>
+    </div>
+
+    <!-- About Page -->
+    <div id="about-page" style="display: none;">
+        <header class="header">
+            <div class="video-container">
+                <div class="video-overlay"></div>
+                <video id="videoPlayer" autoplay muted playsinline loop>
+                    <source src="videos/Source3.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+
+            <div class="hero-content">
+                <h1 class="hero-title">About Me</h1>
+                <p class="hero-description" style="font-size: 1.5rem; color: #aaa; margin-top: 20px;">
+                    Things about me.
+                </p>
+            </div>
+        </header>
+
+        <div class="about-content">
+            <div class="about-text">
+                <p style="font-size: 2rem; color: #222; text-align: center; margin-bottom: 20px;">
+                    I’m a dedicated Roblox developer with a passion for building immersive and engaging experiences. I started developing in 2019, inspired by a lifelong love for creating games and virtual worlds.
+                </p>
+                <p>
+                    My skills center around 3D modeling and building, where I focus on detail and polish to bring my ideas to life. One of my proudest achievements is contributing to Noob Army Tycoon, a game that has reached over 300 million visits—a milestone that has driven my ambition to launch my own successful game in the future.
+                </p>
+            </div>
+        </div>
+
+        <!-- Moved Image Outside -->
+        <div class="about-image">
+            <img src="Images/featured.png" alt="About" class="about-img">
+        </div>
+
+        <div class="about-content">
+            <div class="about-text">
+                <p>
+                    I’m committed to following through on every project I take on, with a strong work ethic and a detail-oriented approach. Although I haven’t yet worked on collaborative projects, I’m excited about the possibility of collaborating with other talented creators in the future.
+                </p>
+                <p style="font-weight: bold; margin-top: 20px;">Goals</p>
+                <ul>
+                    <li>Develop and launch my own successful game on Roblox</li>
+                    <li>Continue refining my skills in 3D modeling and building</li>
+                    <li>Explore opportunities to collaborate with other developers and artists</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    </div>
+
+
+	<!-- Updated Contact Page -->
+	<div id="contact-page" style="display: none;">
+    <header class="header">
+        <div class="video-container">
+            <div class="video-overlay"></div>
+            <video id="videoPlayer" autoplay muted playsinline loop>
+                <source src="videos/Source2.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+        </div>
+
+        <div class="hero-content">
+            <h1 class="hero-title">Get In Touch</h1>
+            <p style="font-size: 1.5rem; margin-top: 20px;">Let's create something amazing together</p>
+            <p style="font-size: 2rem; margin-top: 30px; font-weight: 600;">
+                <i class="fab fa-discord"></i>
+                <span>harpyillogical</span>
+            </p>
+        </div>
+    </header>
+
+    <div class="section">
+			<div class="contact-container" style="display: grid; grid-template-columns: 1fr 1fr; gap: 60px; width: 100%;">
+				<!-- NEW CONTACT FORM -->
+				<div class="contact-form fade-in">
+					<form action="https://formspree.io/f/mvgrkven" method="POST">
+						<div class="form-group">
+							<label for="name">Name (required)</label>
+							<input type="text" id="name" name="name" required style="border-radius: 0;">
+						</div>
+						<div class="form-group">
+							<label for="email">Email (required)</label>
+							<input type="email" id="email" name="email" required style="border-radius: 0;">
+						</div>
+						<div class="form-group">
+							<label for="subject">Subject (required)</label>
+							<input type="text" id="subject" name="subject" required style="border-radius: 0;">
+						</div>
+						<div class="form-group">
+							<label for="message">Message (required)</label>
+							<textarea id="message" name="message" required style="border-radius: 0;"></textarea>
+						</div>
+						<button type="submit" class="submit-btn" style="border-radius: 0;">Send Message</button>
+					</form>
+				</div>
+				
+				<!-- EXISTING CONTACT INFO -->
+				<div class="contact-info fade-in" style="display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;">
+					<div class="info-item">
+						<div class="info-title" style="font-size: 1.8rem;">Email</div>
+						<div>rquang130@gmail.com</div>
+					</div>
+					<div class="info-item">
+						<div class="info-title" style="font-size: 1.8rem;">Discord</div>
+						<div>harpyillogical</div>
+					</div>
+					<div class="info-item">
+						<div class="info-title" style="font-size: 1.8rem;">Location</div>
+						<div>Ho Chi Minh City, VietNam</div>
+					</div>
+					<div class="info-item">
+						<div class="info-title" style="font-size: 1.8rem;">Working Hours</div>
+						<div>Monday-Friday: 2AM - 11PM GMT</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+    <!-- Project Page Structure -->
+    <div id="project-page" style="display: none;">
+		<header class="header">
+			<div class="video-container">
+				<div class="video-overlay"></div>
+				<video id="project-video-player" autoplay muted loop playsinline>
+				<!-- FUCKFUCKFUCKFUCKFUCKFUCKFUCKFUCKFUCKFUCKFUCKFUCKFUCK -->
+				</video>
+			</div>
+			
+			<div class="hero-content">
+				<h1 class="hero-title" id="project-title">Project Title</h1>
+			</div>
+		</header>
+
+        <!-- Introduction Section -->
+        <section class="section" style="background: white;">
+            <div class="intro-content" style="display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; max-width: 1200px; margin: 0 auto; padding: 0 20px;">
+                <div>
+                    <h2 id="intro-heading" style="font-size: 2.5rem; margin-bottom: 20px;"></h2>
+                    <p id="intro-text" style="margin-bottom: 30px;"></p>
+                    <!-- <button class="submit-btn">Learn More</button> 
+                    <div style="display: flex; justify-content: space-between; margin-top: 40px;">
+                        <div style="text-align: center;">
+                            <i class="fas fa-users" style="font-size: 2rem; margin-bottom: 10px;"></i>
+                            <p>Community</p>
+                        </div>
+                        <div style="text-align: center;">
+                            <i class="fas fa-fist-raised" style="font-size: 2rem; margin-bottom: 10px;"></i>
+                            <p>Activism</p>
+                        </div>
+                        <div style="text-align: center;">
+                            <i class="fas fa-graduation-cap" style="font-size: 2rem; margin-bottom: 10px;"></i>
+                            <p>Education</p>
+                        </div>
+                    </div> -->
+                </div>
+                <div>
+                    <p id="project-description"></p>
+                </div>
+            </div>
+        </section>
+
+		<!-- Dynamic Gallery Section -->
+		<section class="section" style="background: #f8f8f8; display: block; min-height: unset; padding: 30px 0;">
+			<div style="max-width: 1200px; margin: 0 auto; padding: 0 20px;">
+				<h2 style="text-align: center; font-size: 2.5rem; margin-bottom: 40px;">Project Gallery</h2>
+				
+				<div id="main-gallery" style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px;">
+					<!-- Main images will be inserted here -->
+				</div>
+
+				<div id="posters-gallery" style="display: flex; justify-content: space-between; flex-wrap: wrap; gap: 20px;">
+					<!-- Posters will be inserted here -->
+				</div>
+			</div>
+		</section>
+
+        <!-- Results Section -->
+        <!-- <section class="section" style="background: white;">
+            <div style="max-width: 800px; margin: 0 auto; text-align: center; padding: 0 20px;">
+                <div style="display: flex; justify-content: space-around; margin-bottom: 40px; flex-wrap: wrap;">
+                    <div style="margin: 10px 20px;">
+                        <h3 style="font-size: 2rem; margin-bottom: 10px;">1.1m</h3>
+                        <p>visits</p>
+                    </div>
+                    <div style="margin: 10px 20px;">
+                        <h3 style="font-size: 2rem; margin-bottom: 10px;">760+</h3>
+                        <p>news stories</p>
+                    </div>
+                    <div style="margin: 10px 20px;">
+                        <h3 style="font-size: 2rem; margin-bottom: 10px;">8.2m</h3>
+                        <p>articles read</p>
+                    </div>
+                </div>
+                <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 100%;">
+                    <iframe id="project-video" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" src="" frameborder="0" allowfullscreen></iframe>
+                </div>
+            </div>
+        </section> -->
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="social-icons">
+            <a href="https://facebook.com" target="_blank"><i class="fab fa-facebook-f"></i></a>
+            <a href="https://youtube.com" target="_blank"><i class="fab fa-youtube"></i></a>
+            <a href="https://instagram.com" target="_blank"><i class="fab fa-instagram"></i></a>
+            <a href="https://discord.com" target="_blank"><i class="fab fa-discord"></i></a>
+        </div>
+
+        <div class="footer-content">
+            <div class="footer-logo">HARPYILLOGICAL</div>
+            <div class="copyright">© 2025 HarpyIllogical. All rights reserved.</div>
+        </div>
+    </footer>
+
+    <script>
+        // Page switching functionality
+        function showPage(pageId) {
+            // Hide all pages
+            document.getElementById('home-page').style.display = 'none';
+            document.getElementById('portfolio-page').style.display = 'none';
+            document.getElementById('about-page').style.display = 'none';
+            document.getElementById('contact-page').style.display = 'none';
+            document.getElementById('project-page').style.display = 'none';
+            // Show selected page
+            document.getElementById(pageId).style.display = 'block';
+            // Reset scroll position
+            window.scrollTo(0, 0);
+            // Update navigation active state
+            document.querySelectorAll('.nav-links a').forEach(link => {
+                link.classList.remove('active');
+            });
+            // Set active state for current page
+            const currentLink = Array.from(document.querySelectorAll('.nav-links a')).find(link => {
+                return link.getAttribute('href').includes(pageId.replace('-page', ''));
+            });
+            if (currentLink) {
+                currentLink.classList.add('active');
+            }
+        }
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', function() {
+            // Show home page by default
+            showPage('home-page');
+            // Navigation click handlers
+            document.querySelectorAll('.nav-links a').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const pageMap = {
+                        'index.html': 'home-page',
+                        'portfolio.html': 'portfolio-page',
+                        'about.html': 'about-page',
+                        'contact.html': 'contact-page'
+                    };
+                    const pageId = pageMap[this.getAttribute('href')];
+                    if (pageId) {
+                        showPage(pageId);
+                    }
+                });
+            });
+        });
+        // Sticky navigation
+        const navbar = document.querySelector('.navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+        // Video player script
+        const player = document.getElementById('videoPlayer');
+        if (player) {
+            let currentIndex = 1;
+            const totalVideos = 17;
+            const preloadedVideos = {};
+
+            function preloadVideo(index) {
+                if (index > 0 && index <= totalVideos && !preloadedVideos[index]) {
+                    const videoElement = document.createElement('video');
+                    videoElement.src = `videos/Source${index}.mp4`;
+                    videoElement.preload = 'auto';
+                    videoElement.load();
+                    preloadedVideos[index] = videoElement;
+                }
+            }
+            document.addEventListener('DOMContentLoaded', () => {
+                preloadVideo(currentIndex);
+                preloadVideo((currentIndex % totalVideos) + 1);
+                preloadVideo(((currentIndex + 1) % totalVideos) + 1);
+            });
+            player.addEventListener('ended', () => {
+                currentIndex = (currentIndex % totalVideos) + 1;
+                const nextVideoElement = preloadedVideos[currentIndex];
+                if (nextVideoElement) {
+                    player.src = nextVideoElement.src;
+                    player.load();
+                    player.play().catch(e => {});
+                    const videoToPreloadIndex = ((currentIndex) % totalVideos) + 1;
+                    preloadVideo(videoToPreloadIndex);
+                } else {
+                    player.src = `videos/Source${currentIndex}.mp4`;
+                    player.load();
+                    player.play().catch(e => {});
+                    const videoToPreloadIndex = ((currentIndex) % totalVideos) + 1;
+                    preloadVideo(videoToPreloadIndex);
+                }
+            });
+        }
+        // Social icons animation
+        const socialIcons = document.querySelector('.social-icons');
+        const footer = document.querySelector('.footer');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    socialIcons.classList.add('visible');
+                } else {
+                    socialIcons.classList.remove('visible');
+                }
+            });
+        }, {
+            threshold: 0.1
+        });
+        if (footer) {
+            observer.observe(footer);
+        }
+        // Fade-in animation on scroll
+        const fadeElements = document.querySelectorAll('.fade-in');
+        const fadeInOnScroll = () => {
+            fadeElements.forEach(element => {
+                const elementTop = element.getBoundingClientRect().top;
+                const elementVisible = 150;
+                if (elementTop < window.innerHeight - elementVisible) {
+                    element.classList.add('appear');
+                }
+            });
+        };
+        window.addEventListener('scroll', fadeInOnScroll);
+        window.addEventListener('load', fadeInOnScroll);
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const featuredImages = [{
+                    main: "images/featured1.png",
+                    thumb: "images/featured1.png"
+                },
+                {
+                    main: "images/featured2.png",
+                    thumb: "images/featured2.png"
+                },
+                {
+                    main: "images/featured3.png",
+                    thumb: "images/featured3.png"
+                },
+                {
+                    main: "images/featured4.png",
+                    thumb: "images/featured4.png"
+                },
+                {
+                    main: "images/featured5.png",
+                    thumb: "images/featured5.png"
+                },
+                {
+                    main: "images/featured6.png",
+                    thumb: "images/featured6.png"
+                },
+                {
+                    main: "images/featured7.png",
+                    thumb: "images/featured7.png"
+                },
+                {
+                    main: "images/featured8.png",
+                    thumb: "images/featured8.png"
+                },
+                {
+                    main: "images/featured9.png",
+                    thumb: "images/featured9.png"
+                },
+                {
+                    main: "images/featured10.png",
+                    thumb: "images/featured10.png"
+                }
+            ];
+
+            const mainImage = document.getElementById('main-featured-image');
+            const thumbnailElements = document.querySelectorAll('.thumbnail');
+            let currentIndex = 0;
+            let carouselInterval;
+
+            function updateCarousel(index, withFade = true) {
+                if (mainImage.src && mainImage.src.endsWith(featuredImages[index].main.substring(featuredImages[index].main.lastIndexOf('/') + 1))) {
+                    thumbnailElements.forEach((thumb, i) => {
+                        thumb.classList.toggle('active', i === index);
+                    });
+                    currentIndex = index;
+                    return;
+                }
+
+                if (withFade) {
+                    mainImage.style.opacity = 0;
+                    setTimeout(() => {
+                        mainImage.src = featuredImages[index].main;
+                        mainImage.alt = `Featured Work ${index + 1}`;
+                        mainImage.style.opacity = 1;
+                    }, 400);
+                } else {
+                    mainImage.style.opacity = 0;
+                    mainImage.src = featuredImages[index].main;
+                    mainImage.alt = `Featured Work ${index + 1}`;
+                    mainImage.style.opacity = 1;
+                }
+
+                thumbnailElements.forEach((thumb, i) => {
+                    thumb.classList.toggle('active', i === index);
+                });
+
+                currentIndex = index;
+            }
+
+            function startCarousel() {
+                carouselInterval = setInterval(() => {
+                    const nextIndex = (currentIndex + 1) % featuredImages.length;
+                    updateCarousel(nextIndex);
+                }, 5000);
+            }
+
+            function stopCarousel() {
+                clearInterval(carouselInterval);
+            }
+
+            thumbnailElements.forEach(thumb => {
+                thumb.addEventListener('click', function() {
+                    stopCarousel();
+                    const index = parseInt(this.getAttribute('data-index'));
+                    updateCarousel(index);
+                    startCarousel();
+                });
+            });
+
+            document.querySelector('.left-arrow').addEventListener('click', function() {
+                stopCarousel();
+                const newIndex = (currentIndex - 1 + featuredImages.length) % featuredImages.length;
+                updateCarousel(newIndex);
+                startCarousel();
+            });
+
+            document.querySelector('.right-arrow').addEventListener('click', function() {
+                stopCarousel();
+                const newIndex = (currentIndex + 1) % featuredImages.length;
+                updateCarousel(newIndex);
+                startCarousel();
+            });
+
+            document.getElementById('portfolio-button').addEventListener('click', function() {
+                //alert("Full portfolio would be shown here");
+                showPage('portfolio-page')
+            });
+
+            updateCarousel(0, false);
+            startCarousel();
+        });
+
+        // Project data storage
+		const projects = {
+			"project1": {
+				title: "Malarkar",
+				introHeading: "A digital experiment in character creation.",
+				introText: "This project began as a personal journey into professional 3D modeling and evolved into a deeper exploration of animation, scripting, and game-ready character design.",
+				description: "Malarkar is a fully playable character developed as part of a larger, experimental game project. Created using Blender, Substance Painter, 3D Coat, and integrated into Roblox, the character serves as a testbed for learning industry workflows across multiple disciplines. From sculpting and rigging to animation and scripting, Malarkar represents a hands-on study of what it takes to bring a character to life in an interactive environment. Built with no intended audience, it is a personal project driven purely by curiosity and the pursuit of technical mastery.",
+				heroVideo: "videos/Source5.mp4",
+				videoUrl: "https://www.youtube.com/embed/ScMzIvxBSi4",
+				galleryImages: [
+					"images/project1/featured1.jpg",
+					"images/project1/featured2.png",
+					"images/project1/featured3.png",
+					"images/project1/featured4.png",
+					"images/project1/featured5.png",
+					"images/project1/featured6.png",
+				],
+				posters: [
+					"images/project1/poster1.png",
+					"images/project1/poster2.png",
+					"images/project1/poster3.png",
+					"images/project1/poster4.png",
+					"images/project1/poster5.jpg",
+				],
+				stats: {
+					visits: "1.1m",
+					stories: "760+",
+					articles: "8.2m"
+				}
+			},
+			
+			"project2": {
+				title: "My Pet Tycoon",
+				introHeading: "A strange simulator.",
+				introText: "This project was an exploration into building a complete, playable game — a standalone simulator created to test skills in scripting, design, and player systems.",
+				description: "My Pet Tycoon is a Roblox-based simulator where players take on the role of a witch sculpting bizarre animal companions and sending them to the world below as living pets. Built using Roblox Studio, Blender, and Lua, the game marked a personal milestone in completing and publishing a full game experience. While it gained modest attention with over 4,000 visits, the process revealed a deeper insight: simulation-style games aren’t the direction forward. My Pet Tycoon was a lesson in finishing what was started — and a turning point toward only creating games worth playing personally.",
+				heroVideo: "videos/Source5.mp4",
+				videoUrl: "https://www.youtube.com/embed/ScMzIvxBSi4",
+				galleryImages: [
+					"images/project2/featured1.png",
+					"images/project2/featured2.png",
+					"images/project2/featured3.png",
+					"images/project2/featured4.png",
+					"images/project2/featured5.png",
+					"images/project2/featured6.png",
+				],
+				posters: [
+					"images/project2/poster1.png",
+					"images/project2/poster2.png",
+					"images/project2/poster3.png",
+					"images/project2/poster4.png",
+				],
+				stats: {
+					visits: "1.1m",
+					stories: "760+",
+					articles: "8.2m"
+				}
+			},
+			
+			"project3": {
+				title: "Duels Pedestals",
+				introHeading: "Small update for Noob Army Tycoon.",
+				introText: "For a small update to the game, I designed 20 unique pedestals to bring new visual elements to players.",
+				description: "I created the Duels Pedestals using Blender and integrated them into Roblox. This was a straightforward 3D workflow. It was a good exercise in efficient content creation for an existing game, some players seemed to like the additions.",
+				heroVideo: "videos/Source5.mp4",
+				videoUrl: "https://www.youtube.com/embed/ScMzIvxBSi4",
+				galleryImages: [
+					"images/project3/featured1.png",
+					"images/project3/featured2.png",
+					"images/project3/featured3.png",
+					"images/project3/featured4.png",
+					"images/project3/featured5.png",
+					"images/project3/featured6.png",
+				],
+				posters: [
+					"images/project3/poster1.png",
+					"images/project3/poster2.png",
+					"images/project3/poster3.png",
+					"images/project3/poster4.png",
+					"images/project3/poster5.png",
+				],
+				stats: {
+					visits: "1.1m",
+					stories: "760+",
+					articles: "8.2m"
+				}
+			},
+			
+			"project4": {
+				title: "Fourth Anniversary Skin",
+				introHeading: "A special look for Noob Army Tycoon's anniversary.",
+				introText: "I created a 3D building skin to celebrate the fourth anniversary of Noob Army Tycoon.",
+				description: "This was a commission for Noob Army Tycoon, where I used Blender to design a celebratory building skin and integrated it into Roblox. The goal was simply to make something visually appealing for the game's anniversary, and I focused on making it look nice for the players.",
+				heroVideo: "videos/Source5.mp4",
+				videoUrl: "https://www.youtube.com/embed/ScMzIvxBSi4",
+				galleryImages: [
+					"images/project4/featured1.png",
+					"images/project4/featured2.png",
+					"images/project4/featured3.png",
+					"images/project4/featured4.png",
+					"images/project4/featured5.png",
+				],
+				posters: [
+					"images/project4/poster1.png",
+					"images/project4/poster2.png",
+					"images/project4/poster3.png",
+					"images/project4/poster4.png",
+					"images/project4/poster5.png",
+				],
+				stats: {
+					visits: "1.1m",
+					stories: "760+",
+					articles: "8.2m"
+				}
+			},
+			
+			"project5": {
+				title: "Commission Collection",
+				introHeading: "A gallery of commissioned 3D map work.",
+				introText: "This project is a compilation of various 3D map modeling commissions, representing my venture into professional work.",
+				description: "This collection showcases diverse 3D maps I've modeled for various clients, primarily using Blender and integrating them into Roblox. The main objective for these projects was earning income and gaining practical experience in 3D map creation. It was a straightforward workflow focused on delivering client-specific environments, and the positive feedback received was a notable outcome.",
+				heroVideo: "videos/Source5.mp4",
+				videoUrl: "https://www.youtube.com/embed/ScMzIvxBSi4",
+				galleryImages: [
+					"images/project5/featured1.webp",
+					"images/project5/featured2.png",
+					"images/project5/featured3.png",
+					"images/project5/featured4.png",
+					"images/project5/featured5.png",
+				],
+				posters: [
+					"images/project5/poster1.webp",
+					"images/project5/poster2.png",
+					"images/project5/poster3.png",
+					"images/project5/poster4.png",
+					"images/project5/poster5.png",
+				],
+				stats: {
+					visits: "1.1m",
+					stories: "760+",
+					articles: "8.2m"
+				}
+			},
+		};
+
+        // Function to show project page
+        function showProject(projectId) {
+            // Hide all pages
+            document.getElementById('home-page').style.display = 'none';
+            document.getElementById('portfolio-page').style.display = 'none';
+            document.getElementById('about-page').style.display = 'none';
+            document.getElementById('contact-page').style.display = 'none';
+            document.getElementById('project-page').style.display = 'block';
+            window.scrollTo(0, 0);
+            // Load project data
+            loadProject(projectId);
+        }
+
+		function renderGallery(project) {
+			if (!project) return;
+
+			// Clear existing galleries
+			const mainGallery = document.getElementById('main-gallery');
+			const postersGallery = document.getElementById('posters-gallery');
+			mainGallery.innerHTML = '';
+			postersGallery.innerHTML = '';
+
+			// Render main gallery images
+			project.galleryImages.forEach((img, index) => {
+				const galleryItem = document.createElement('div');
+				galleryItem.className = 'gallery-item';
+				galleryItem.style.height = index < 2 ? '400px' : 
+										 index < 4 ? '500px' : 
+										 index < 6 ? '400px' : '300px';
+				galleryItem.style.backgroundImage = `url('${img}')`;
+				galleryItem.style.backgroundSize = 'cover';
+				galleryItem.style.backgroundPosition = 'center';
+				galleryItem.style.cursor = 'pointer';
+				mainGallery.appendChild(galleryItem);
+			});
+
+			// Render posters
+			project.posters.forEach(poster => {
+				const posterItem = document.createElement('div');
+				posterItem.className = 'gallery-poster';
+				posterItem.style.flex = '1';
+				posterItem.style.minWidth = '200px';
+				posterItem.style.height = '300px';
+				posterItem.style.backgroundImage = `url('${poster}')`;
+				posterItem.style.backgroundSize = 'cover';
+				posterItem.style.backgroundPosition = 'center';
+				postersGallery.appendChild(posterItem);
+			});
+		}
+
+        // Function to load project data
+		function loadProject(projectId) {
+			const project = projects[projectId];
+			if (!project) return;
+
+			document.getElementById('project-title').textContent = project.title;
+			document.getElementById('intro-heading').textContent = project.introHeading;
+			document.getElementById('intro-text').textContent = project.introText;
+			document.getElementById('project-description').textContent = project.description;
+			
+			renderGallery(project);
+
+			for (let i = 0; i < 8; i++) {
+				const img = project.images[i];
+				const element = document.getElementById(`gallery-image-${i}`);
+				if (element && img) {
+					element.style.backgroundImage = `url('${img}')`;
+				}
+			}
+
+			for (let i = 0; i < 5; i++) {
+				const poster = project.posters[i];
+				const element = document.getElementById(`poster-${i}`);
+				if (element && poster) {
+					element.style.backgroundImage = `url('${poster}')`;
+				}
+			}
+
+			const player = document.getElementById('project-video-player');
+			player.src = project.heroVideo;
+			player.play().catch(() => {});
+		}
+
+        // Add cursor pointer to clickable elements
+        const style = document.createElement('style');
+        style.textContent = `
+        #main-featured-image {
+            cursor: pointer;
+        }
+        .portfolio-item {
+            cursor: pointer;
+        }
+        .gallery-image, .gallery-poster {
+            cursor: zoom-in;
+        }
+    `;
+        document.head.appendChild(style);
+    </script>
+</body>
+
+</html>
